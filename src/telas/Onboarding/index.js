@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StatusBar, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StatusBar, Image, TouchableOpacity, LayoutAnimation } from 'react-native';
 
 import styles from './styles';
 import itens from './cards';
@@ -13,11 +13,25 @@ const Onboarding = ({ navigation }) => {
   const [fazerLogin, setFazerLogin] = useState(false);
   const [altura, setAltura] = useState(250);
 
+  const animacaoCustomizada = {
+    duration: 1500,
+    create: {
+      type: LayoutAnimation.Types.spring,
+      property: LayoutAnimation.Properties.scaleXY,
+      springDamping: 0.7,
+    }
+  };
+
+  LayoutAnimation.configureNext(animacaoCustomizada);
+
   const avancar = () => {
     if (fazerLogin) {
       navigation.navigate('Principal');
     } else {
       setAltura(400);
+
+      LayoutAnimation.linear();
+
       setFazerLogin(true);
     }
   };
