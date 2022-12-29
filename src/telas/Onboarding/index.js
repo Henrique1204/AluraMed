@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StatusBar, Image, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, StatusBar, Image, TouchableOpacity } from 'react-native';
 
 import styles from './styles';
 import itens from './cards';
@@ -7,6 +7,7 @@ import itens from './cards';
 import FundoOndulado from '../../componentes/FundoOndulado';
 import TelaDeFundo from '../../componentes/TelaDeFundo';
 import Formulario from '../../componentes/Formulario';
+import Carrousel from '../../componentes/Carrousel';
 
 const Onboarding = ({ navigation }) => {
   const [fazerLogin, setFazerLogin] = useState(false);
@@ -32,21 +33,7 @@ const Onboarding = ({ navigation }) => {
         />
 
         <View style={styles.carrosselArea}>
-          {!fazerLogin && (
-            <FlatList
-              data={itens}
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              keyExtractor={item => item.id}
-              renderItem={({ item }) => (
-                <Image
-                  source={item.imagem}
-                  style={{ height: '100%', width: 150 }}
-                  resizeMode="contain"
-                />
-              )}
-            />
-          )}
+          {!fazerLogin && <Carrousel data={itens} />}
         </View>
 
         <Image
