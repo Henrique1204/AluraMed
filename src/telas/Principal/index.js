@@ -9,8 +9,21 @@ import CardConsulta from '../../componentes/CardConsulta';
 import TelaDeFundo from '../../componentes/TelaDeFundo';
 
 import soniaFoto from '../../assets/sonia.png';
+import CardConsultaSkeleton from '../../componentes/CardConsultaSkeleton';
 
 const Principal = ({ navigation }) => {
+  const [loading, setLoading] = React.useState(true);
+
+  const timeoutRef = React.useRef(null);
+
+  React.useEffect(() => {
+    timeoutRef.current = setTimeout(() => setLoading(false), 1500);
+
+    return () => {
+      clearTimeout(timeoutRef.current);
+    }
+  }, []);
+
   return (
     <TelaDeFundo>
       <View style={styles.container}>
@@ -26,9 +39,13 @@ const Principal = ({ navigation }) => {
           data={pacientes}
           keyExtractor={item => String(item.id)}
           renderItem={({ item }) => (
-            <TouchableOpacity onPress={() => navigation.navigate('Detalhes', item)}>
-              <CardConsulta {...item} />
-            </TouchableOpacity>
+            loading ? (
+              <CardConsultaSkeleton />
+            ) : (
+              <TouchableOpacity onPress={() => navigation.navigate('Detalhes', item)}>
+                <CardConsulta {...item} />
+              </TouchableOpacity>
+            )
           )}
           showsVerticalScrollIndicator={false}
         />
